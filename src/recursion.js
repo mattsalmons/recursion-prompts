@@ -278,7 +278,7 @@ var reverse = function(string) {
     return string
   }
 
-  return string[last] + reverse(string.slice(0, last))
+  return string[lastIndex] + reverse(string.slice(0, lastIndex))
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -396,12 +396,76 @@ var countKeysInObj = function(obj, key) {
 // var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
-var countValuesInObj = function(obj, value) {
-};
+
+// input:
+//  - object
+//  - target value
+// output:
+//  - integer representing the number of occurences of target in object
+// constraints / rules:
+//  - none
+// edge cases / test:
+//  - input is an empty obj
+//  - target value is not found
+// approach:
+//  - create storage obj
+//  - iterate through obj
+//    - if obj[key] is not an object
+//      - increment storage[target]
+//        - otherwise
+//      recurse on obj[key], target
+//  - return storage[value]
+var countValuesInObj = function(obj, target) {
+  var total = 0;
+  for (var key in obj) {
+   var value = obj[key];
+   if (typeof value === 'object') {
+     total += countValuesInObj(value, target);
+   }
+   if (value === target) {
+     total++
+   }
+  }
+  return total;
+}
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
+
+// obj[oldKey] = value; delete object[oldKey]; object[newKey] = value
+// input:
+//  - object
+//  - old key to be replaced
+//  - new key
+// output:
+//  - mutated input object
+// constrains / rules:
+//  - should mutate input object
+//  - returned object should have same number of keys as input
+//  - should use recursion
+// edge cases / tests:
+//  - na
+// approach:
+//  - iterate through input obj
+//  - create currentValue alias
+//  - if currentKey is same as oldKey
+//    - delete obj[currentKey]
+//    - obj[newKey] = value;
+//  - if currentValue is another object
+//    - call replaceKeysInObj on value, oldKey, newKey
+// return obj
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+  for (var currentKey in obj) {
+    var currentValue = obj[currentKey];
+    if (currentKey === oldKey) {
+      delete obj[currentKey];
+      obj[newKey] = currentValue;
+    }
+    if (typeof currentValue === 'object') {
+      replaceKeysInObj(currentValue, oldKey, newKey);
+    }
+  }
+  return obj
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
