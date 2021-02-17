@@ -272,7 +272,7 @@ var powerOfTwo = function(n) {
 
 var reverse = function(string) {
 
-  var last = string.length -1;
+  var lastIndex = string.length - 1;
 
   if (string.length === 1) {
     return string
@@ -282,7 +282,40 @@ var reverse = function(string) {
 };
 
 // 10. Write a function that determines if a string is a palindrome.
+// input:
+//  - string that may be a palidrome
+// output:
+//  - boolean
+//    - false if input is not a palidrome
+//    - true otherwise
+// constraints / rules:
+//  - can not use rev
+//  - ignore spaces and case
+//  - must use recursion
+//  - must be invoked with only one argument
+// edge cases / tests:
+//  - string is one character
+//  - string is palidrome
+//  - string is not a palidrome
+//  - string contains spaces
+//  - string is mixed case
+// approach:
+//  - convert input to lowercase
+//  - if string is only a single character
+//    - return true
+//  - if comparing first and last char evals to false
+//    - return false
+//  - call palidrome on remaining sub string
 var palindrome = function(string) {
+  string = string.toLowerCase();
+
+  if (string.length < 1) {
+    return true;
+  } else if (string[0] !== string[string.length - 1]) {
+    return false;
+  }
+
+  return palindrome(string.slice(1, string.length - 1))
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
