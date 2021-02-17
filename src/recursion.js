@@ -112,6 +112,7 @@ var arraySum = function(array) {
 //    -return true
 //  - return result of calling isEven on n - 2
 //   - return false
+
 var isEven = function(n) {
   n = Math.abs(n);
 
@@ -147,6 +148,7 @@ var isEven = function(n) {
 //  if isNegative flag evaluates to true
 //    return negave of n + sumBelow(n - 1)
 //  return n + sumBelow(n - 1)
+
 var sumBelow = function(n) {
   var isNegative = n < 0;
   n = Math.abs(n);
@@ -182,7 +184,6 @@ var sumBelow = function(n) {
 //      - otherwise
 //    - return result of invoking range on min, max - 1
 //
-
 
 var range = function(x, y) {
   var needsReversed = x > y;
@@ -227,6 +228,7 @@ var range = function(x, y) {
 //    - return 1
 //  - if expIsNegative evaluates to false
 //    - return base times result of calling exponent on base, exp - 1
+
 var exponent = function(base, exp) {
   if (exp === 0) {
     return 1;
@@ -234,7 +236,6 @@ var exponent = function(base, exp) {
   if (exp < 0) {
     return exponent(base, exp + 1) / base;
   }
-
   return base * exponent(base, exp - 1);
 };
 
@@ -242,7 +243,29 @@ var exponent = function(base, exp) {
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
+
+// input:
+//  - integer
+// output:
+//  - boolean
+//    - true is n is a factor of 2
+//    - false if not
+// constraints / rules:
+//  - n is positive
+// edge cases:
+//  - n is 1
+// approach:
+//
 var powerOfTwo = function(n) {
+  if (n === 1) {
+    return true
+  }
+
+  if (n === 0 || n % 2 !== 0) {
+    return false;
+  }
+
+  return powerOfTwo(n / 2);
 };
 
 // 9. Write a function that reverses a string.
