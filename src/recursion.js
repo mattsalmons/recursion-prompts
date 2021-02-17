@@ -151,7 +151,7 @@ var sumBelow = function(n) {
   var isNegative = n < 0;
   n = Math.abs(n);
   if (n <= 1) {
-    return 0
+    return 0;
   }
 
   if (isNegative) {
@@ -164,9 +164,43 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 
+// input:
+//  - two integers representing min and max
+// output:
+//  - an array of all the numbers between min an max (NOT inclusive)
+// constraints / rules:
+//  - should accept negative numbers
+//  - should return empty array if no numbers are in range
+// edge cases :
+//  - if no numbers are in range
+//  - if y is larger than x
+// approach:
+//  - create a needsReversed flag
+//  - declare min and max variables
+//  - if max - min is less than 2
+//    - return empty array
+//      - otherwise
+//    - return result of invoking range on min, max - 1
+//
+
 
 var range = function(x, y) {
+  var needsReversed = x > y;
 
+  var min = Math.min(x, y);
+  var max = Math.max(x, y);
+
+  if (max - min < 2) {
+    return [];
+  }
+
+  var inRangeIntegers = range(min, max - 1)
+  inRangeIntegers.push(max - 1)
+  if (needsReversed) {
+    return inRangeIntegers.reverse()
+  }
+
+  return inRangeIntegers
 };
 
 // 7. Compute the exponent of a number.
@@ -174,7 +208,34 @@ var range = function(x, y) {
 // 8^2 = 8 x 8 = 64. Here, 8 is the base and 2 is the exponent.
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
+
+// input:
+//  - two integers
+//    - 'base' and 'exponent'
+// output:
+//  - an intiger representing the result of base to the exp power (base^exp)
+// constraints / rules:
+//  - no complex math
+//  - should accept negative exp
+//  - must call itself
+// edge cases:
+//  - exp is 0
+//  - exp is 1
+// approach:
+//  - create expIsNegative flag
+//  - if exp is 0
+//    - return 1
+//  - if expIsNegative evaluates to false
+//    - return base times result of calling exponent on base, exp - 1
 var exponent = function(base, exp) {
+  if (exp === 0) {
+    return 1;
+  }
+  if (exp < 0) {
+    return exponent(base, exp + 1) / base;
+  }
+
+  return base * exponent(base, exp - 1);
 };
 
 // 8. Determine if a number is a power of two.
